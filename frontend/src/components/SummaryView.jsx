@@ -28,7 +28,7 @@ export default function SummaryView({ summary }) {
   });
 
   return (
-    <section className="block" aria-labelledby="summary-title">
+    <section className="summary-block" aria-labelledby="summary-title">
       <h3 id="summary-title">Summary</h3>
       <div className="summary">
         {blocks.map((b, i) =>

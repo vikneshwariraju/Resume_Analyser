@@ -20,7 +20,7 @@ export const FIELD_LABELS = {
 
 export default function UploadPanel({
   options, samples, file, sample, style, level, focus, loading,
-  onFile, onSample, onStyle, onLevel, onToggleFocus, onSubmit,
+  onFile, onClearFile, onSample, onStyle, onLevel, onToggleFocus, onSubmit,
 }) {
   const [dragging, setDragging] = useState(false);
   const ready = Boolean(options);
@@ -38,9 +38,16 @@ export default function UploadPanel({
           onDrop={(e) => { e.preventDefault(); setDragging(false); onFile(e.dataTransfer.files[0]); }}
         >
           <input type="file" accept=".pdf,.txt" onChange={(e) => onFile(e.target.files[0])} />
-          <span className="drop-title">{file ? file.name : "Choose a file or drop it here"}</span>
+          <span className="drop-title">{file ? "Choose a different file" : "Choose a file or drop it here"}</span>
           <span className="muted">PDF or TXT, up to 5 MB</span>
         </label>
+
+        {file && (
+          <div className="file-chip">
+            <span className="file-name">{file.name}</span>
+            <button type="button" className="link-button" onClick={onClearFile}>Remove</button>
+          </div>
+        )}
 
         {samples.length > 0 && (
           <div className="field">
@@ -94,6 +101,7 @@ export default function UploadPanel({
       </fieldset>
 
       <button type="button" className="primary" onClick={onSubmit} disabled={!ready || loading}>
+        {loading && <span className="spinner" aria-hidden="true" />}
         {loading ? "Analyzing…" : "Analyze resume"}
       </button>
     </aside>

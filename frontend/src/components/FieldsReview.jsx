@@ -58,46 +58,27 @@ function renderValue(field, value) {
   return <p>{JSON.stringify(value)}</p>;
 }
 
-export default function FieldsReview({ data, fields, missing, warnings, filename }) {
-  function download() {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${filename.replace(/\.[^.]+$/, "")}_extracted.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+export default function FieldsReview({ data, fields, missing, statuses = [] }) {
+  const byField = Object.fromEntries(statuses.map((s) => [s.field, s]));
 
   return (
-    <section className="block" aria-labelledby="fields-title">
-      <div className="block-head">
-        <h3 id="fields-title">Extracted details</h3>
-        <button type="button" className="secondary" onClick={download}>Download JSON</button>
-      </div>
-
+    <section className="block sheet" aria-labelledby="fields-title">
+      <h3 id="fields-title">Extracted details</h3>
       <dl className="fields">
         {fields.map((f) => {
           const isMissing = missing.includes(f);
+          const isPartial = !isMissing && byField[f] && byField[f].status === "partial";
           return (
-            <div key={f} className={`row${isMissing ? " missing" : ""}`}>
+            <div key={f} className={`row${isMissing ? " missing" : isPartial ? " partial" : ""}`}>
               <dt>{FIELD_LABELS[f] || f}</dt>
               <dd>
                 {isMissing ? <p>Not found in the document</p> : renderValue(f, data[f])}
+                {isPartial && <p className="partial-note">Incomplete: {byField[f].note}</p>}
               </dd>
             </div>
           );
         })}
       </dl>
-
-      {warnings.length > 0 && (
-        <div className="warnings">
-          <h4>Needs a second look</h4>
-          <ul>
-            {warnings.map((w, i) => <li key={i}>{w}</li>)}
-          </ul>
-        </div>
-      )}
     </section>
   );
 }
