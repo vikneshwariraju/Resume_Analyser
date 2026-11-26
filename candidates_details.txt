@@ -5,5 +5,5 @@ Year of study / expected graduation year: B.E. 2022-2026 batch (graduation year:
 Mobile number: +91 7708398743
 Email address: vikneshwariraju@gmail.com
 Task chosen: Task 2 (AI-Powered Document Intelligence Platform)
-Live demo URL: 
+Live demo URL: https://frontend-blush-eight-7da8jgmydc.vercel.app/
 GitHub repository URL: https://github.com/vikneshwariraju/Resume_Analyser.git

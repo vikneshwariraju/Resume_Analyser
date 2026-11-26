@@ -2,7 +2,7 @@
 
 Upload a resume (PDF or TXT) and get an AI summary, structured details as validated JSON, a skills chart and a completeness score. Anything the AI cannot find in the document is returned as `null` and marked as missing, never guessed.
 
-- **Live demo:** `<paste your Vercel URL>`
+- **Live demo:** `https://frontend-blush-eight-7da8jgmydc.vercel.app/`
 - **Note for reviewers:** the backend runs on Render's free tier and sleeps when idle. The first request after a quiet period can take 30 to 60 seconds. Open the demo once, wait for the page to say it is connected, then test.
 
 ## Features
