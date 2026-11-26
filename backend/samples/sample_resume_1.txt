@@ -1,0 +1,20 @@
+Priya Sharma
+Email: priya.sharma@example.com | Phone: +91 98765 43210
+
+SUMMARY
+Final-year Computer Science student interested in backend and AI development.
+
+EDUCATION
+B.E. Computer Science and Engineering, ABC College of Engineering, 2022-2026, CGPA 8.4/10
+Higher Secondary, XYZ Matriculation School, 2022, 91%
+
+SKILLS
+Python, FastAPI, React, SQL, Git, Docker, REST APIs, scikit-learn
+
+EXPERIENCE
+Backend Intern, TechNova Solutions (Jun 2025 - Aug 2025)
+- Built REST APIs with FastAPI for an inventory system
+- Wrote unit tests and reduced bug reports by 20%
+
+PROJECTS
+Smart Notes - RAG-based PDF question answering app using LangChain and ChromaDB
