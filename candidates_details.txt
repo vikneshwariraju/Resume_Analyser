@@ -1,0 +1,9 @@
+Full name: Vikneshwari R
+Register number: <your register number>
+College name and department: Sir Issac Newton College of Engineering and Technology, Computer Science and Engineering
+Year of study / expected graduation year: B.E. 2022-2026 batch (graduation year: 2026)
+Mobile number: +91 7708398743
+Email address: vikneshwariraju@gmail.com
+Task chosen: Task 2 (AI-Powered Document Intelligence Platform)
+Live demo URL: 
+GitHub repository URL: https://github.com/vikneshwariraju/Resume_Analyser.git

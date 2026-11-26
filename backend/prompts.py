@@ -62,7 +62,10 @@ def build_summary_prompt(doc_text: str, style: str, level: str = "standard", foc
         f"{SUMMARY_STYLES[style]}\n"
         f"{DEPTH[level]}\n"
         f"{focus_line}"
-        "Highlight the most important findings (strongest skills, standout projects, notable achievements).\n\n"
+        "Highlight the most important findings (strongest skills, standout projects, notable achievements).\n"
+        "Do not repeat the same job, internship, company, or project heading. "
+        "Combine multiple achievements from the same role under one heading or bullet. "
+        "Keep each experience entry together instead of repeating its role and company for every achievement.\n\n"
         f"RESUME:\n\"\"\"\n{doc_text[:MAX_CHARS]}\n\"\"\""
     )
 
