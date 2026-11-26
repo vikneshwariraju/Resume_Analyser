@@ -19,7 +19,7 @@ export const FIELD_LABELS = {
 };
 
 export default function UploadPanel({
-  options, samples, file, sample, style, level, focus, loading,
+  options, samples, file, sample, style, level, focus, loading, stale,
   onFile, onClearFile, onSample, onStyle, onLevel, onToggleFocus, onSubmit,
 }) {
   const [dragging, setDragging] = useState(false);
@@ -102,7 +102,7 @@ export default function UploadPanel({
 
       <button type="button" className="primary" onClick={onSubmit} disabled={!ready || loading}>
         {loading && <span className="spinner" aria-hidden="true" />}
-        {loading ? "Analyzing…" : "Analyze resume"}
+        {loading ? "Analyzing…" : stale ? "Update results" : "Analyze resume"}
       </button>
     </aside>
   );

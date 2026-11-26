@@ -235,3 +235,9 @@ tbody th { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- stale results ---------- */
+.notice.stale { background: var(--flag-bg); border-color: var(--flag-line); color: var(--flag-ink); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.result-stack { transition: opacity 0.2s; }
+.result-stack.stale { opacity: 0.55; }
+

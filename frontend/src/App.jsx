@@ -25,6 +25,16 @@ export default function App() {
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
   const resultsRef = useRef(null);
+  const [lastRun, setLastRun] = useState(null);
+
+  // Describes the options the person has selected right now. If it differs from the last run, the results are out of date.
+  const currentKey = JSON.stringify({
+    source: file ? `${file.name}:${file.size}` : sample,
+    style,
+    level,
+    focus: [...focus].sort(),
+  });
+  const isStale = Boolean(result) && lastRun !== currentKey;
 
   function loadSetup() {
     setError("");
@@ -74,12 +84,14 @@ export default function App() {
       setError("Choose a sample or upload a file first.");
       return;
     }
+    const key = currentKey;
     setLoading(true);
     setError("");
     setResult(null);
     if (window.innerWidth <= 860) resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     try {
       setResult(await analyze({ file, sample, style, level, focus }));
+      setLastRun(key);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -112,6 +124,7 @@ export default function App() {
           level={level}
           focus={focus}
           loading={loading}
+          stale={isStale}
           onFile={handleFile}
           onClearFile={() => setFile(null)}
           onSample={handleSample}
@@ -152,8 +165,15 @@ export default function App() {
             </div>
           )}
 
+          {isStale && !loading && (
+            <div className="notice stale" role="status">
+              <p>You changed the options. The results below are from the previous run.</p>
+              <button type="button" className="link-button" onClick={handleSubmit}>Update results</button>
+            </div>
+          )}
+
           {result && (
-            <div className="result-stack">
+            <div className={`result-stack${isStale ? " stale" : ""}`}>
               <ResultHeader result={result} />
 
               <div className="overview">

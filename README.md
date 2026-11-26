@@ -13,7 +13,7 @@ Upload a resume (PDF or TXT) and get an AI summary, structured details as valida
 | Summary with selectable style (brief, detailed, bullet points) | `backend/prompts.py`, `backend/llm.py` |
 | Structured extraction as JSON, `null` for missing values | `backend/schemas.py`, `backend/analysis.py` |
 | Analysis levels (basic, standard, detailed) and focus fields | `backend/prompts.py` (`LEVEL_FIELDS`), `backend/analysis.py` |
-| Visual insight: skills by category chart | `backend/insights.py`, `frontend/src/components/SkillsChart.jsx` |
+| Visual insight: skills by category chart, built from the extracted data | `backend/insights.py`, `frontend/src/components/SkillsChart.jsx` |
 | Review UI, missing/uncertain flags, completeness score | `frontend/src/components/`, `backend/scoring.py` |
 
 ## Technologies
@@ -112,6 +112,8 @@ Focus narrows a level to the chosen fields. Only requested fields are returned, 
 
 **Visual insight.** Skills are grouped into categories (AI and machine learning, backend, databases, frontend, languages, tools) with keyword rules and drawn as bars. This is deterministic, needs no extra AI call, and always matches the extracted data.
 
+**Results and options.** Results update when the user selects Analyze or Update results, not on every click, because each analysis makes two model calls on a limited free quota. After an option changes, the page dims the previous results and shows an "options changed" notice.
+
 **Reliability.** All Gemini calls go through `backend/llm.py`. Server errors (500, 503, 504) are retried with a short wait. Quota errors (429) or exhausted retries move to the next model in `GEMINI_FALLBACK_MODELS`. Failures are shown to the user as plain-language messages.
 
 ## Known limitations
@@ -121,6 +123,7 @@ Focus narrows a level to the chosen fields. Only requested fields are returned, 
 - Skill categories use keyword rules, so uncommon skills appear under "Other".
 - The grounding check matches text exactly. A correct value that the model reworded can occasionally be dropped and flagged.
 - Layout-heavy PDFs (multi-column, tables) can produce jumbled text, which lowers extraction quality.
+- The visual insight is a rule-based chart built from the extracted data. The assessment also allows an AI-generated image, but the free tiers I tested (Gemini image models, Pollinations) had no image quota, so I chose the accurate data-driven option.
 - Free-tier Gemini has rate limits and occasional high-demand errors. Backup models reduce this but cannot remove it.
 - Each analysis makes two model calls (summary and extraction).
 - No user accounts or storage: uploaded files are processed in memory and not saved.
